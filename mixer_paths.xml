@@ -140,19 +140,16 @@
     <path name="headset">
         <path name="ear" />
             <ctl name="DAC1 Playback Volume" value="175"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
     </path>
 
     <path name="speaker-and-headphones">
         <path name="spk-ear" />
             <ctl name="DAC1 Playback Volume" value="111"/>
-            <ctl name="Headphone Playback Volume" value="17"/>
     </path>
 
     <path name="speaker-and-headphones-bt-sco">
         <path name="spk-ear" />
             <ctl name="DAC1 Playback Volume" value="175"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
     </path>
 
     <path name="speaker-and-bt-sco">
@@ -170,7 +167,6 @@
     <path name="fm-headset">
         <path name="ear" />
             <ctl name="DAC1 Playback Volume" value="175"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
     </path>
 
     <path name="sidetone-handset">
@@ -433,7 +429,6 @@
     <path name="voice-call-headset">
         <path name="ear" />
             <ctl name="DAC1 Playback Volume" value="175"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
             <ctl name="Disable NG2" value="1"/>
     </path>
 
@@ -531,7 +526,6 @@
     <path name="voice-call-cp2-headset">
         <path name="ear" />
             <ctl name="DAC1 Playback Volume" value="175"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
             <ctl name="Disable NG2" value="1"/>
     </path>
 
@@ -627,7 +621,6 @@
     <path name="video-call-headset">
         <path name="ear" />
             <ctl name="DAC1 Playback Volume" value="175"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
             <ctl name="Disable NG2" value="1"/>
     </path>
 
@@ -703,7 +696,6 @@
     <path name="VoLTE-voice-headset">
         <path name="ear" />
             <ctl name="DAC1 Playback Volume" value="175"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
             <ctl name="Disable NG2" value="1"/>
     </path>
 
@@ -778,7 +770,6 @@
     <path name="VoLTE-voice-headset-wb">
         <path name="ear" />
             <ctl name="DAC1 Playback Volume" value="175"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
             <ctl name="Disable NG2" value="1"/>
     </path>
 
@@ -848,7 +839,6 @@
     <path name="VoLTE-video-headset">
         <path name="ear" />
             <ctl name="DAC1 Playback Volume" value="175"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
             <ctl name="Disable NG2" value="1"/>
     </path>
 
@@ -917,7 +907,6 @@
     <path name="VoLTE-video-headset-wb">
         <path name="ear" />
             <ctl name="DAC1 Playback Volume" value="175"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
             <ctl name="Disable NG2" value="1"/>
     </path>
 
@@ -979,14 +968,12 @@
     <path name="TTY-headset">
         <path name="ear" />
             <ctl name="DAC1 Playback Volume" value="175"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
             <ctl name="Disable NG2" value="1"/>
     </path>
 
     <path name="TTY-full">
         <path name="ear" />
             <ctl name="DAC1 Playback Volume" value="175"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
             <ctl name="Disable NG2" value="1"/>
     </path>
 
@@ -1027,14 +1014,12 @@
     <path name="ap_TTY-headset">
         <path name="ear" />
             <ctl name="DAC1 Playback Volume" value="175"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
             <ctl name="Disable NG2" value="1"/>
     </path>
 
     <path name="ap_TTY-full">
         <path name="ear" />
             <ctl name="DAC1 Playback Volume" value="175"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
             <ctl name="Disable NG2" value="1"/>
     </path>
 
@@ -1073,7 +1058,6 @@
     <path name="voip-headset-comm">
         <path name="ear" />
             <ctl name="DAC1 Playback Volume" value="175"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
     </path>
 
     <path name="voip-handset-others">
@@ -1088,7 +1072,6 @@
     <path name="voip-headset-others">
         <path name="ear" />
             <ctl name="DAC1 Playback Volume" value="175"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
     </path>
 
     <path name="voip-handset-chaton">
@@ -1103,7 +1086,6 @@
     <path name="voip-headset-chaton">
         <path name="ear" />
             <ctl name="DAC1 Playback Volume" value="175"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
     </path>
 
     <path name="voip-handset-callforwarding">
@@ -1118,7 +1100,6 @@
     <path name="voip-headset-callforwarding">
         <path name="ear" />
             <ctl name="DAC1 Playback Volume" value="175"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
     </path>
 
     <path name="voip-handset-carrier">
@@ -1133,7 +1114,6 @@
     <path name="voip-headset-carrier">
         <path name="ear" />
             <ctl name="DAC1 Playback Volume" value="175"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
     </path>
 
     <!-- TX part -->
@@ -1278,7 +1258,6 @@
     <path name="loopback-headset-DSP">
         <path name="ear" />
             <ctl name="DAC1 Playback Volume" value="150"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
     </path>
 
     <path name="loopback-handset">
@@ -1298,7 +1277,6 @@
     <path name="loopback-headset">
         <path name="ear" />
             <ctl name="DAC1 Playback Volume" value="175"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
     </path>
 
     <!-- TX part -->
@@ -1407,7 +1385,6 @@
     <path name="loopback-cp2-headset-DSP">
         <path name="ear" />
             <ctl name="DAC1 Playback Volume" value="175"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
     </path>
 
     <path name="loopback-cp2-handset">
@@ -1427,7 +1404,6 @@
     <path name="loopback-cp2-headset">
         <path name="ear" />
             <ctl name="DAC1 Playback Volume" value="175"/>
-            <ctl name="Headphone Playback Volume" value="31"/>
     </path>
 
     <!-- TX part -->
