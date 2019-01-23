@@ -1301,8 +1301,6 @@ static void rt5665_noise_gate(struct snd_soc_codec *codec, bool enable)
 	if (enable) {
 		snd_soc_update_bits(codec, RT5665_STO1_DAC_SIL_DET,
 			0xc700, 0x8400);
-		snd_soc_update_bits(codec, RT5665_SIL_PSV_CTRL1,
-			0x8000, 0x8000);
 		snd_soc_update_bits(codec, RT5665_SIL_PSV_CTRL5,
 			0x3000, 0x3000);
 		snd_soc_update_bits(codec, RT5665_HP_LOGIC_CTRL_3,
@@ -1313,8 +1311,6 @@ static void rt5665_noise_gate(struct snd_soc_codec *codec, bool enable)
 		snd_soc_update_bits(codec, RT5665_HP_LOGIC_CTRL_3,
 			0x000c, 0);
 		snd_soc_update_bits(codec, RT5665_STO1_DAC_SIL_DET,
-			0x8000, 0);
-		snd_soc_update_bits(codec, RT5665_SIL_PSV_CTRL1,
 			0x8000, 0);
 		snd_soc_update_bits(codec, RT5665_SIL_PSV_CTRL5,
 			0x3000, 0);
