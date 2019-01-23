@@ -1082,12 +1082,13 @@ static void rt5665_offset_compensate(struct rt5665_priv *rt5665)
 static void rt5665_recalibrate(struct snd_soc_codec *codec)
 {
 	struct rt5665_priv *rt5665 = snd_soc_codec_get_drvdata(codec);
-	unsigned int reg063, reg06b, reg1db, reg080;
+	unsigned int reg063, reg06b, reg1db, reg080, reg13a;
 
 	reg063 = snd_soc_read(codec, RT5665_PWR_ANLG_1);
 	reg06b = snd_soc_read(codec, RT5665_CLK_DET);
 	reg1db = snd_soc_read(codec, RT5665_HP_LOGIC_CTRL_2);
 	reg080 = snd_soc_read(codec, RT5665_GLB_CLK);
+	reg13a = snd_soc_read(codec, RT5665_CHOP_DAC);
 
 	if (!(snd_soc_read(codec, RT5665_PWR_ANLG_1) &
 		(RT5665_PWR_VREF1 | RT5665_PWR_VREF2))) {
@@ -1099,10 +1100,14 @@ static void rt5665_recalibrate(struct snd_soc_codec *codec)
 			RT5665_PWR_FV2, RT5665_PWR_FV1 | RT5665_PWR_FV2);
 	}
 
+	snd_soc_update_bits(codec, RT5665_MICBIAS_2, 0x200, 0x200);
 	snd_soc_update_bits(codec, RT5665_GLB_CLK, RT5665_SCLK_SRC_MASK,
 		RT5665_SCLK_SRC_RCCLK);
 	snd_soc_update_bits(codec, RT5665_CLK_DET, 0x8001, 0x8001);
 	snd_soc_update_bits(codec, RT5665_CHOP_DAC, 0x3000, 0x3000);
+
+	usleep_range(3000, 5000);
+
 	snd_soc_write(codec, RT5665_CALIB_ADC_CTRL, 0x3005);
 	snd_soc_write(codec, RT5665_HP_CALIB_CTRL_2, 0x0321);
 	snd_soc_update_bits(codec, RT5665_DIG_MISC, 0x4000, 0x4000);
@@ -1117,6 +1122,7 @@ static void rt5665_recalibrate(struct snd_soc_codec *codec)
 	snd_soc_write(codec, RT5665_HP_LOGIC_CTRL_2, reg1db);
 	snd_soc_write(codec, RT5665_HP_CALIB_CTRL_2, 0x0320);
 	snd_soc_write(codec, RT5665_CALIB_ADC_CTRL, 0x2005);
+	snd_soc_write(codec, RT5665_CHOP_DAC, reg13a);
 	snd_soc_update_bits(codec, RT5665_CLK_DET, 0x8001, reg06b);
 	snd_soc_update_bits(codec, RT5665_GLB_CLK, RT5665_SCLK_SRC_MASK,
 		reg080);
@@ -1126,6 +1132,8 @@ static void rt5665_recalibrate(struct snd_soc_codec *codec)
 
 	if (rt5665->pdata.offset_comp[0])
 		rt5665_offset_compensate(rt5665);
+
+	snd_soc_update_bits(codec, RT5665_MICBIAS_2, 0x200, 0);
 }
 
 static int rt5665_hp_vol_put(struct snd_kcontrol *kcontrol,
@@ -2235,9 +2243,6 @@ static int rt5665_capless_event(struct snd_soc_dapm_widget *w,
 		if (time_after(jiffies, timeout))
 			rt5665_recalibrate(codec);
 		timeout = jiffies + (HZ * 60);
-		snd_soc_update_bits(codec, RT5665_CHOP_DAC,
-			RT5665_CKGEN_DAC1_MASK, 0);
-		snd_soc_update_bits(codec, RT5665_MICBIAS_2, 0x200, 0);
 		break;
 
 	default:
@@ -3297,18 +3302,18 @@ static int rt5665_hp_event(struct snd_soc_dapm_widget *w,
 		snd_soc_update_bits(codec, RT5665_DEPOP_1, RT5665_EN_OUT_HP,
 			RT5665_EN_OUT_HP);
 
+		usleep_range(3000, 5000);
+
+		snd_soc_write(codec, RT5665_HP_LOGIC_CTRL_2, 0x0002);
+
+		snd_soc_update_bits(codec, RT5665_GLB_CLK, RT5665_SCLK_SRC_MASK,
+			reg080);
+
 		if (!rt5665->disable_ng2) {
 			snd_soc_update_bits(codec, RT5665_STO_NG2_CTRL_1,
 				RT5665_NG2_EN_MASK, RT5665_NG2_EN);
 			rt5665_noise_gate(codec, true);
 		}
-
-		usleep_range(3000, 5000);
-
-		snd_soc_update_bits(codec, RT5665_GLB_CLK, RT5665_SCLK_SRC_MASK,
-			reg080);
-
-		snd_soc_write(codec, RT5665_HP_LOGIC_CTRL_2, 0x0002);
 		break;
 
 	case SND_SOC_DAPM_POST_PMD:
@@ -3320,6 +3325,9 @@ static int rt5665_hp_event(struct snd_soc_dapm_widget *w,
 		snd_soc_update_bits(codec, RT5665_STO_NG2_CTRL_1,
 			RT5665_NG2_EN_MASK, RT5665_NG2_DIS);
 		rt5665_noise_gate(codec, false);
+		snd_soc_update_bits(codec, RT5665_CHOP_DAC,
+			RT5665_CKGEN_DAC1_MASK, 0);
+		snd_soc_update_bits(codec, RT5665_MICBIAS_2, 0x200, 0);
 		break;
 
 	default:
@@ -5436,6 +5444,7 @@ static int rt5665_parse_dt(struct rt5665_priv *rt5665, struct device *dev)
 		rt5665->impedance_value = 0;
 		rt5665->impedance_gain = 0;
 		rt5665->impedance_bias = 6;
+		rt5665->do_rek = true;
 	} else {
 		rt5665->impedance_gain_map = false;
 	}
