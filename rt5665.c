@@ -5450,6 +5450,12 @@ static int rt5665_remove(struct snd_soc_codec *codec)
 {
 	struct rt5665_priv *rt5665 = snd_soc_codec_get_drvdata(codec);
 
+	cancel_delayed_work_sync(&rt5665->calibrate_work);
+	cancel_delayed_work_sync(&rt5665->jd_check_work);
+	cancel_delayed_work_sync(&rt5665->ng_check_work);
+	cancel_delayed_work_sync(&rt5665->jack_detect_work);
+	cancel_delayed_work_sync(&rt5665->jack_detect_open_gender_work);
+
 	regmap_write(rt5665->regmap, RT5665_RESET, 0);
 	device_remove_file(codec->dev, &dev_attr_codec_reg);
 	device_remove_file(codec->dev, &dev_attr_codec_reg_adb);
