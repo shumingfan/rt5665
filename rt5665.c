@@ -5696,6 +5696,7 @@ static int rt5665_parse_dt(struct rt5665_priv *rt5665, struct device *dev)
 static void rt5665_calibrate(struct rt5665_priv *rt5665)
 {
 	struct snd_soc_codec *codec = rt5665->codec;
+	struct snd_soc_dapm_context *dapm = snd_soc_codec_get_dapm(codec);
 	int value, count, ret;
 	unsigned long irq_flags;
 
@@ -5777,6 +5778,9 @@ static void rt5665_calibrate(struct rt5665_priv *rt5665)
 	regmap_write(rt5665->regmap, RT5665_STO1_DAC_SIL_DET, 0x4121);
 
 	mutex_unlock(&codec->component.card->dapm_mutex);
+
+	/* ldo2 enable */
+	snd_soc_dapm_force_enable_pin(dapm, "LDO2");
 
 	if (rt5665->irq) {
 		rt5665_irq(0, rt5665);
