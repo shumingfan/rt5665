@@ -5731,6 +5731,8 @@ static void rt5665_calibrate(struct rt5665_priv *rt5665)
 	regmap_write(rt5665->regmap, RT5665_PWR_ANLG_1, 0xaa3e);
 	usleep_range(15000, 20000);
 	regmap_write(rt5665->regmap, RT5665_PWR_ANLG_1, 0xfe7e);
+	regmap_write(rt5665->regmap, RT5665_BIAS_CUR_CTRL_9, 0x0aaa);
+	regmap_write(rt5665->regmap, RT5665_PWR_ANLG_3, 0x0004);
 	regmap_write(rt5665->regmap, RT5665_HP_CALIB_CTRL_2, 0x0321);
 
 	regmap_write(rt5665->regmap, RT5665_HP_CALIB_CTRL_1, 0xfc00);
@@ -5786,6 +5788,7 @@ static void rt5665_calibrate(struct rt5665_priv *rt5665)
 	mutex_unlock(&codec->component.card->dapm_mutex);
 
 	/* ldo2 enable */
+	regmap_write(rt5665->regmap, RT5665_BIAS_CUR_CTRL_9, 0x0aaa);
 	snd_soc_dapm_force_enable_pin(dapm, "LDO2");
 
 	if (rt5665->irq) {
